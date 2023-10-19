@@ -1,12 +1,33 @@
 import random
 
 
-# TODO: functions for all 10 pairs
-
-
 def poker_draw(draw, colors, symbols):
+    draw.sort()
     print(draw)
-    # check for combinations
+
+    # get lists of colors and symbols
+    color_draws = []
+    symbol_draws = []
+    for card in draw:
+        color_draws.append(card // symbols)
+        symbol_draws.append(card % symbols)
+    symbol_draws.sort()
+
+    # check if colors are the same
+    flush = color_draws[0] == color_draws[-1]
+    # check if it is a straight
+    # TODO: let straights loop around
+    straight = symbol_draws[-1] - symbol_draws[0] == len(symbol_draws)
+
+    # return correct combination
+    if flush and straight and (symbol_draws[-1] == (symbols - 1)):
+        return "royal_flush"
+    elif flush and straight:
+        return "straight_flush"
+    elif flush:
+        return "flush"
+    elif straight:
+        return "straight"
 
 
 def poker_stats(cards_num, colors, symbols):
@@ -15,7 +36,9 @@ def poker_stats(cards_num, colors, symbols):
 
     for _ in range(iterations):
         random.shuffle(cards)
-        poker_draw(cards[:cards_num], colors, symbols)
+        draw = cards[:cards_num]
+
+        print(poker_draw(draw, colors, symbols))
 
 
 if __name__ == "__main__":
