@@ -2,8 +2,7 @@ import random
 import matplotlib.pyplot as plt
 
 
-def print_info(draw, result):
-    # get lists of colors and symbols
+def get_colors_and_symbols(draw, symbol_count):
     colors = []
     symbols = []
     for card in draw:
@@ -11,22 +10,14 @@ def print_info(draw, result):
         symbols.append(card % symbol_count)
     symbols.sort()
 
-    print(draw)
-    print(colors)
-    print(symbols)
-    print(result)
+    return colors, symbols
 
 
-def poker_draw(draw, symbol_count):
+def analyze_poker_draw(draw, symbol_count):
     draw.sort()
 
     # get lists of colors and symbols
-    colors = []
-    symbols = []
-    for card in draw:
-        colors.append(card // symbol_count)
-        symbols.append(card % symbol_count)
-    symbols.sort()
+    colors, symbols = get_colors_and_symbols(draw, symbol_count)
 
     # check for flush (same color)
     flush = colors[0] == colors[-1]
@@ -34,9 +25,17 @@ def poker_draw(draw, symbol_count):
     # check for straight
     straight = True
     for i in range(len(draw)):
-        if symbols[i] != ((symbols[0] + i) % symbol_count):
-            straight = False
-            break
+        if symbols[i] != (symbols[0] + i):
+
+            last_card = i == (len(draw)-1)
+            highest_card = symbols[i] == (symbol_count-1)
+            starts_with_zero = symbols[0] == 0
+
+            if last_card and highest_card and starts_with_zero:
+                break
+            else:
+                straight = False
+                break
 
     # check for royal
     royal = symbols[0] == (symbol_count - len(draw))
@@ -48,16 +47,17 @@ def poker_draw(draw, symbol_count):
         return "straight-flush"
 
     # check for pairs, three of a kind, four of a kind
-    symbol_occ_dict = {}
+    occurrence_dict = {}
     for symbol in symbols:
-        if symbol not in symbol_occ_dict.keys():
-            symbol_occ_dict[symbol] = 0
-        symbol_occ_dict[symbol] += 1
-    symbol_occ = list(symbol_occ_dict.values())
-    four_of_a_kind = 4 in symbol_occ
-    three_of_a_kind = 3 in symbol_occ
-    two_pair = symbol_occ.count(2) == 2
-    pair = 2 in symbol_occ
+        if symbol not in occurrence_dict.keys():
+            occurrence_dict[symbol] = 0
+        occurrence_dict[symbol] += 1
+    occurrences = list(occurrence_dict.values())
+
+    four_of_a_kind = 4 in occurrences
+    three_of_a_kind = 3 in occurrences
+    two_pair = occurrences.count(2) == 2
+    pair = 2 in occurrences
 
     # return correct combination
     if four_of_a_kind:
@@ -88,8 +88,8 @@ def poker_stats(iterations):
         random.shuffle(cards)
         draw = cards[:draw_count]
 
-        result = poker_draw(draw, symbol_count)
-        stats[result] += 100/iterations
+        result = analyze_poker_draw(draw, symbol_count)
+        stats[result] += 100 / iterations
 
     return stats
 
