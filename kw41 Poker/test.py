@@ -21,7 +21,7 @@ class TestPoker(unittest.TestCase):
 
 
 def main():
-    pass
+    unittest.main()
 
 
 if __name__ == "main":
