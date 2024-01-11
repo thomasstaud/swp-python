@@ -1,4 +1,6 @@
+import random
 import game
+import statistics
 
 PLAY_CMD = 'p'
 STAT_CMD = 's'
@@ -8,25 +10,32 @@ MENU_CMD = 'exit'
 def play():
     sign = None
     while sign not in ['0', '1', '2', '3', '4', 'exit']:
-        sign = input(f"\nEnter your sign or enter '{MENU_CMD}' to go back to the menu"
-                     "\n(Rock: 0, Paper: 1, Scissors: 2, Spock: 3, Lizard: 4)\n")
+        print(f"\nEnter your sign or enter '{MENU_CMD}' to go back to the menu")
+        print("(Rock: 0, Paper: 1, Scissors: 2, Spock: 3, Lizard: 4)")
+        sign = input()
 
     if sign == 'exit':
         menu()
 
-    result = game.play(int(sign), 0)
-    if result == 0:
-        print("It's a tie!")
-    elif result == 1:
-        print("You won!")
-    else:
-        print("You lost!")
+    sign = int(sign)
+    com_sign = random.randint(0, 4)
+    print(f"{game.SIGNS[sign]} vs. {game.SIGNS[com_sign]}:")
+
+    result = game.play(sign, com_sign)
+    statistics.update_stats(sign, result)
+    match result:
+        case 0:
+            print("It's a tie!")
+        case 1:
+            print("You won!")
+        case 2:
+            print("You lost!")
 
     play()
 
 
 def stats():
-    print("\nFeature does not exist yet")
+    statistics.print_stats()
     menu()
 
 
@@ -34,7 +43,8 @@ def menu():
     print("\nWelcome to: Rock Paper Scissors Spock Lizard - the Game")
     mode = None
     while mode not in [PLAY_CMD, STAT_CMD]:
-        mode = input(f"Enter '{PLAY_CMD}' to play or '{STAT_CMD}' for statistics:\n")
+        print(f"Enter '{PLAY_CMD}' to play or '{STAT_CMD}' for statistics:")
+        mode = input()
 
     if mode == PLAY_CMD:
         play()
@@ -43,6 +53,7 @@ def menu():
 
 
 def main():
+    statistics.load_stats()
     menu()
 
 

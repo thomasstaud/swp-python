@@ -1,5 +1,7 @@
 
-# Rock, Paper, Scissors, Spock, Lizard = 0, 1, 2, 3, 4
+SIGNS = {0: 'Rock', 1: 'Paper', 2: 'Scissors', 3: 'Spock', 4: 'Lizard'}
+
+
 def play(sign_1, sign_2):
     if sign_1 == sign_2:
         return 0
