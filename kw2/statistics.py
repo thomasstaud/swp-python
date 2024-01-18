@@ -19,7 +19,7 @@ def print_stats():
         ])
 
     print(tabulate(data, headers=head, tablefmt="grid"))
-    input("Press any key to continue...")
+    input("Press Enter to continue...")
 
 
 def load_stats():
