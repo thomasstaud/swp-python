@@ -1,0 +1,17 @@
+{
+    "Rock_tied": 5,
+    "Rock_won": 7,
+    "Rock_lost": 2,
+    "Paper_tied": 2,
+    "Paper_won": 2,
+    "Paper_lost": 2,
+    "Scissors_tied": 1,
+    "Scissors_won": 3,
+    "Scissors_lost": 0,
+    "Spock_tied": 0,
+    "Spock_won": 2,
+    "Spock_lost": 2,
+    "Lizard_tied": 2,
+    "Lizard_won": 1,
+    "Lizard_lost": 1
+}
