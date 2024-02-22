@@ -30,19 +30,15 @@ def update_table(columns):
         cursor.execute(f'SELECT * FROM {table}')
     except sqlite3.OperationalError:
         setup_db(columns)
-        cursor.execute(f'SELECT * FROM {table}')
-    existing_columns = [description[0] for description in cursor.description]
-
-    # magic???
-    if all(item in existing_columns for item in columns):
-        print('all columns exist')
         return
 
-    # add columns
-    base_query = f'ALTER TABLE {table} ADD COLUMN '
-    for column in columns:
+    existing_columns = [description[0] for description in cursor.description]
+    missing_columns = [column for column in columns if column not in existing_columns]
+
+    # add missing columns
+    for column in missing_columns:
         if column not in existing_columns:
-            query = base_query + column
+            query = f'ALTER TABLE {table} ADD COLUMN {column}'
             print("executing: ", query)
             cursor.execute(query)
 
@@ -78,4 +74,5 @@ def post_statistics():
 
 
 if __name__ == '__main__':
+    setup_db(["hans", "walter"])
     app.run(debug=True)
