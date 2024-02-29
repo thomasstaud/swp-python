@@ -1,4 +1,4 @@
-from kw05_Decorators.poker_timer import timer
+from poker_timer import timer
 
 
 def get_colors_and_symbols(draw, symbol_count):
