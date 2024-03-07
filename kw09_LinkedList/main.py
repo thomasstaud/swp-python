@@ -14,7 +14,10 @@ def main():
     for element in liste:
         print(element)
 
-    # todo: test methods
+    liste = LinkedList.from_list([1, 2, 3])
+    print(liste)
+    liste.append([4, 5, 6])
+    print(liste)
 
 
 if __name__ == "__main__":
