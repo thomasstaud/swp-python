@@ -18,7 +18,19 @@ class LinkedList(Iterator):
         lst.head = node
         return lst
 
+    def prepend(self, value):
+        """
+        Inserts a value at the beginning of the list.
+        """
+        new_node = Node(value)
+        new_node.next = self.head
+        self.head = new_node
+
     def append(self, value):
+        """
+        Appends a value to the end of the list.
+        :param value: can be an integer or a list of integers
+        """
         if value is LinkedList:
             new_node = value.head
         elif isinstance(value, Iterable):
@@ -35,12 +47,14 @@ class LinkedList(Iterator):
             node.next = new_node
 
     def insert_at(self, position, value):
-        new_node = Node(value)
+        """
+        Inserts a value at the specified position.
+        """
         if position == 0:
-            new_node.next = self.head
-            self.head = new_node
+            self.prepend(value)
             return
 
+        new_node = Node(value)
         node = self.head
         index = 0
         while (index + 1) != position:

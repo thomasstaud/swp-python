@@ -4,29 +4,25 @@ from linked_list import LinkedList
 
 class TestLinkedList(unittest.TestCase):
 
-    def create_from_list(self):
-        liste = LinkedList()
-        # todo: test
+    def test_create_from_list(self):
+        lst = LinkedList.from_list([1, 2, 3])
+        self.assertEqual(str(lst), "1 -> 2 -> 3")
 
     def test_length(self):
-        liste = LinkedList()
-        liste.append(1)
-        liste.append(2)
-        liste.append(3)
-
-        self.assertEqual(len(liste), 3)
+        lst = LinkedList.from_list([1, 2, 3])
+        self.assertEqual(len(lst), 3)
 
     def test_methods(self):
-        liste = LinkedList()
+        lst = LinkedList()
 
-        liste.append(999)
-        liste.insert_at(0, 1)
-        liste.append(999)
-        liste.insert_at(2, 2)
-        liste.pop()
-        liste.remove_at(1)
+        lst.append(999)
+        lst.insert_at(0, 1)
+        lst.append(999)
+        lst.insert_at(2, 2)
+        lst.pop()
+        lst.remove_at(1)
 
-        self.assertEqual(str(liste), "1 -> 2")
+        self.assertEqual(str(lst), "1 -> 2")
 
 
 if __name__ == '__main__':
