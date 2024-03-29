@@ -1,4 +1,23 @@
-from poker_timer import timer
+import functools
+import time
+
+
+times = {}
+
+
+def timer(func):
+    @functools.wraps(func)
+    def wrapper(*args, **kwargs):
+        start_time = time.perf_counter()
+        value = func(*args, **kwargs)
+        end_time = time.perf_counter()
+        run_time = end_time - start_time
+        if func.__name__ not in times:
+            times[func.__name__] = 0
+        times[func.__name__] += run_time
+        return value
+
+    return wrapper
 
 
 def get_colors_and_symbols(draw, symbol_count):

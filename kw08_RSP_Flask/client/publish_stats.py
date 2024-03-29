@@ -9,9 +9,10 @@ url = config['url']
 
 def publish():
     body = statistics.stats
-
     res = requests.post(url, json=body)
     print(res.text)
+    # statistics should only be cleared if the request was successful
+    statistics.init_stats()
 
 
 def main():

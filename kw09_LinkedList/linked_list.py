@@ -7,6 +7,10 @@ class LinkedList(Iterator):
 
     @staticmethod
     def from_list(lst):
+        """
+        Creates a linked list from a regular list.
+        :param lst: list of integers
+        """
         length = len(lst)
         next_node = None
         for i in range(length):
@@ -67,6 +71,9 @@ class LinkedList(Iterator):
         node.next = new_node
 
     def pop(self):
+        """
+        Removes the last element of the list and returns it.
+        """
         if self.head.next is None:
             raise Exception
 
@@ -79,6 +86,9 @@ class LinkedList(Iterator):
         return node.value
 
     def remove_at(self, position):
+        """
+        Inserts the element at the specified position.
+        """
         index = 0
         prev_node = None
         node = self.head
